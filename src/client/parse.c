@@ -1,5 +1,22 @@
 #include "client.h"
 
+// Function: Prints a customized error message along with errno if an error occurs
+// Arguments: An integer representing an err value and a string representing the customized error message
+// Return Values: None
+void print_error(int err, char *msg) {
+    // Checking If There Is An Error
+    if (err == -1) {
+        // Printing Program Error Message
+        printf("Error: %s\n", msg);
+
+        // Printing Errno
+        printf("%s\n", strerror(errno));
+    }
+
+    // Exiting Function
+    return;
+}
+
 // Removes Whitespace From A String
 void trim(char *s) {
     // Variable Declarations

@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/ioctl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 
@@ -30,5 +31,14 @@
 
 // Number Constants
 #define HARMONY_BUFFER_SIZE 2048
+#define HARMONY_QUEUE_SIZE 128
+#define HARMONY_PORT "9002"
+#define HARMONY_TEST_IP "127.0.0.1"
+#define HARMONY_IP "0.0.0.0"
+
+// connect.c
+void print_error(int err, char *msg);
+int server_setup();
+int server_handshake(int listen_socket);
 
 #endif

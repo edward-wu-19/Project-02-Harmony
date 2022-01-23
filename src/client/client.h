@@ -33,30 +33,28 @@
 // Number Constants
 #define HARMONY_BUFFER_SIZE 2048
 #define HARMONY_QUEUE_SIZE 128
-
-// client.c
-void print_error(int err, char *msg);
+#define HARMONY_PORT "9002"
+#define HARMONY_TEST_IP "127.0.0.1"
+#define HARMONY_IP "0.0.0.0"
 
 // command.c
 int check_command(char *buff);
 void run_command(int cmd);
 void harmony_exit();
 
+// connect.c
+int client_handshake();
+
 // parse.c
+void print_error(int err, char *msg);
 void trim(char *p);
 char *get_input(char *buff);
 
 // queue.c
-
-struct harmony_message{
-    char *val;
-    char *sender;
+struct harmony_message {
+    char *val, *sender, *time;
     struct harmony_message *next;
     int channel;
-};
-struct queue_node {
-    char *val;
-    struct queue_node *next;
 };
 struct harmony_queue {
     int size;

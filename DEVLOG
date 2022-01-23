@@ -8,10 +8,18 @@ khanMoh -- 2022-01-06 20:30
 
 khanMoh -- 2022-01-07 13:30
 - Completed first step, client can communicate with itself through a message queue
-    - basic input gathering and parsing
-    - message queue struct with necessary structs and functions
-    - screen printing and modification
-    - basic command parsing and running
+    - Basic input gathering and parsing
+    - Message queue struct with necessary structs and functions
+    - Screen printing and modification
+    - Basic command parsing and running
 
 wuEdw -- 2022-01-23 11:41
 - Replaced queue_node with harmony_message struct, preparing for channel and sender (username) features
+
+khanMoh -- 2022-01-23 12:30
+- Completed basic server and client connection
+    - Server select process and handshake
+    - Client select process and handshake
+    - Multiple clients can connect to one server
+    - Clients can send to themselves and receive messages from themselves through the server
+    - Integrated wuEdw's previous changes

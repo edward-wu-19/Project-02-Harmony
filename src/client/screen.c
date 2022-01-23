@@ -32,7 +32,7 @@ void print_screen(struct harmony_queue *Q) {
     // Obtaining Terminal Size And Starting Node
     struct winsize *w = get_terminal_size();
     int height = w->ws_row, i = 0;
-    struct queue_node *node = Q->front;
+    struct harmony_message *node = Q->front;
 
     // Printing Blank Lines If Needed
     for (; i < max(0, height-(Q->size)-1); i++) printf("\n");
@@ -46,4 +46,16 @@ void print_screen(struct harmony_queue *Q) {
     // Exiting Functions
     printf("Type Here: ");
     return;
+}
+
+char* get_time(){
+    // Getting Current Time
+    time_t t = time(NULL);
+
+    // Converting Time To String
+    char *tm = ctime(&t);
+
+    // Error Checking
+    if (tm == NULL) print_error(-1, "Unable To Get Time");
+    else return tm;
 }

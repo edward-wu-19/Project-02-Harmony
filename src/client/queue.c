@@ -1,10 +1,11 @@
 #include "client.h"
 
 // Creates A New Queue Node
-struct queue_node *new_node(char *msg) {
-    struct queue_node *temp = (struct queue_node *) calloc(1, sizeof(struct queue_node));
+struct harmony_message *new_node(char *msg) {
+    struct harmony_message *temp = (struct harmony_message *) calloc(1, sizeof(struct harmony_message));
     temp->val = strdup(msg);
     temp->next = NULL;
+    temp->channel = 0; // 0 is default
     return temp;
 }
 
@@ -20,7 +21,7 @@ struct harmony_queue *create_queue() {
 // Adds A Queue Node To The Queue
 void queue_push(struct harmony_queue *Q, char *msg) {
     // Creating New Queue Node
-    struct queue_node *temp = new_node(msg);
+    struct harmony_message *temp = new_node(msg);
 
     // Adding Queue Node
     if (Q->back == NULL) { // NULL Case
@@ -42,7 +43,7 @@ void queue_pop(struct harmony_queue *Q) {
     if (Q->front == NULL) return;
 
     // Store Current Front Node
-    struct queue_node *temp = Q->front;
+    struct harmony_message *temp = Q->front;
 
     // Move Front Of Queue
     Q->front = Q->front->next;

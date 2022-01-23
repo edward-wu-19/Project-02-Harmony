@@ -12,3 +12,6 @@ khanMoh -- 2022-01-07 13:30
     - message queue struct with necessary structs and functions
     - screen printing and modification
     - basic command parsing and running
+
+wuEdw -- 2022-01-23 11:41
+- Replaced queue_node with harmony_message struct, preparing for channel and sender (username) features

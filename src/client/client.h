@@ -6,6 +6,7 @@
 // Library Imports
 #include <stdio.h>
 #include <fcntl.h>
+#include <time.h>
 #include <errno.h>
 #include <ctype.h>
 #include <netdb.h>
@@ -46,15 +47,22 @@ void trim(char *p);
 char *get_input(char *buff);
 
 // queue.c
+
+struct harmony_message{
+    char *val;
+    char *sender;
+    struct harmony_message *next;
+    int channel;
+};
 struct queue_node {
     char *val;
     struct queue_node *next;
 };
 struct harmony_queue {
     int size;
-    struct queue_node *front, *back;
+    struct harmony_message *front, *back;
 };
-struct queue_node *new_node(char *msg);
+struct harmony_message *new_node(char *msg);
 struct harmony_queue *create_queue();
 void queue_push(struct harmony_queue *Q, char *msg);
 void queue_pop(struct harmony_queue *Q);
@@ -66,5 +74,6 @@ void update_queue(struct harmony_queue *Q, char *msg);
 void clear_screen();
 struct winsize *get_terminal_size();
 void print_screen(struct harmony_queue *Q);
+char* get_time();
 
 #endif

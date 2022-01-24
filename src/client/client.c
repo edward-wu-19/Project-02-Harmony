@@ -8,7 +8,7 @@ int cmd, server_socket, maxfd, chn = 0;
 fd_set init, cpy;
 
 void client_exit() {
-    // Generating Join Message
+    // Generating Exit Message
     strcpy(buff, usr);
     strcat(buff, " has left the channel!");
     data = new_node(buff, "", 0, get_time(), 0);
@@ -51,31 +51,30 @@ static void sighandler(int signo) {
     return;
 }
 
-char* pick_name(){
+char* pick_name() {
+    // Declaring Variables
     usr = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
-
     int appropriate_name = 0;
     char* name_message = "";
 
-    while (!appropriate_name){
+    // Sanitizing Input
+    while (!appropriate_name) {
         clear_screen();
         printf("%s\n", name_message);
         printf("Please Enter A Username: ");
         usr = get_input(usr);
         if (strcmp(usr, "") == 0){
             name_message = "Your username cannot be empty.";
-        }
-        else if (strcmp(usr, "Server") == 0){
+        } else if (strcmp(usr, "Server") == 0){
             name_message = "Your username cannot be Server.";
-        }
-        else if (strcmp(usr, "server") == 0){
+        } else if (strcmp(usr, "server") == 0){
             name_message = "Your username cannot be server.";
-        }
-        else{
+        } else {
             appropriate_name = 1;
         }
     }
 
+    // Exiting Function
     return usr;
 }
 

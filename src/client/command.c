@@ -6,13 +6,12 @@ char *buff, *usr;
 struct harmony_message *data;
 int cmd, server_socket, maxfd;
 fd_set init, cpy;
-
 char* harmony_help_message = "Harmony Help: \n\
     --exit : Terminates the program. \n\
     --help : Returns this message. \n\
     --quit : Terminates the program.\n\
+    --rename : Changes your username. \n\
 Only you can see this message.";
-
 char* harmony_rename_message;
 
 int check_command(char *buff) {
@@ -48,23 +47,28 @@ void harmony_help() {
     update_queue(Q, data);
 }
 
-void harmony_rename(){
-    char* oldusr;
-    strcpy(oldusr, usr); 
+void harmony_rename() {
+    // Saving Old Username
+    char* oldusr = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
+    strcpy(oldusr, usr);
 
+    // Allocating Variables
     data = calloc(1, sizeof(struct harmony_message));
-    harmony_rename_message = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
+    harmony_rename_message = calloc(HARMONY_BUFFER_SIZE, sizeof(char));
 
     // Asking For Username
     usr = pick_name();
 
+    // Updating Screen
     print_screen(Q);
 
+    // Making Response Message
     strcpy(harmony_rename_message, oldusr);
     strcat(harmony_rename_message, " has renamed themselves to ");
     strcat(harmony_rename_message, usr);
     strcat(harmony_rename_message, ".");
 
+    // Making Data Node
     data = new_node(harmony_rename_message, "", 0, get_time(), 0);
 
     // Sending Data

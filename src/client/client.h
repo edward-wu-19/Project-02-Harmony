@@ -38,16 +38,27 @@
 #define HARMONY_TEST_IP "127.0.0.1"
 #define HARMONY_IP "159.89.234.51"
 
+// structs
+struct harmony_message {
+    char val[HARMONY_BUFFER_SIZE], sender[HARMONY_USERNAME_SIZE], time[HARMONY_USERNAME_SIZE];
+    struct harmony_message *next;
+    int channel, id;
+};
+struct harmony_queue {
+    int size;
+    struct harmony_message *front, *back;
+};
+
 // client.c
 void client_exit();
 char* pick_name();
 
 // command.c
 int check_command(char *buff);
-void run_command(int cmd);
+void run_command(int cmd, struct harmony_queue *Q, char *usr, int server_socket);
 void harmony_exit();
-void harmony_help();
-void harmony_rename();
+void harmony_help(struct harmony_queue *Q);
+void harmony_rename(struct harmony_queue *Q, char *usr, int server_socket);
 
 // connect.c
 int client_handshake(char *ip);
@@ -58,15 +69,6 @@ void trim(char *p);
 char *get_input(char *buff);
 
 // queue.c
-struct harmony_message {
-    char val[HARMONY_BUFFER_SIZE], sender[HARMONY_USERNAME_SIZE], time[HARMONY_USERNAME_SIZE];
-    struct harmony_message *next;
-    int channel, id;
-};
-struct harmony_queue {
-    int size;
-    struct harmony_message *front, *back;
-};
 struct harmony_message *new_node(char *msg, char* usr, int chn, char* time, int id);
 struct harmony_queue *create_queue();
 void queue_push(struct harmony_queue *Q, char *msg, char *usr, int chn, int id);

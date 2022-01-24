@@ -151,7 +151,7 @@ int main(int argc, char **argv) {
             if (strlen(buff) == 0) continue;
 
             if ((cmd = check_command(buff))) { // If Command Run It
-                run_command(cmd);
+                run_command(cmd, Q, usr, server_socket);
             } else { // Else Write To Server
                 // Creating Message Struct
                 data = new_node(buff, usr, chn, get_time(), 0);

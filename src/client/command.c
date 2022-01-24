@@ -1,11 +1,6 @@
 #include "client.h"
 
 // Global Variables
-struct harmony_queue *Q;
-char *buff, *usr;
-struct harmony_message *data;
-int cmd, server_socket, maxfd;
-fd_set init, cpy;
 char* harmony_help_message = "Harmony Help: \n\
     --exit : Terminates the program. \n\
     --help : Returns this message. \n\
@@ -30,11 +25,11 @@ int check_command(char *buff) {
 // Function: A helper function that runs commands based on the command id
 // Arguments: An integer that represents the command id
 // Return Values: None
-void run_command(int cmd) {
+void run_command(int cmd, struct harmony_queue *Q, char *usr, int server_socket) {
     // Running Commands
     if (cmd == 1) harmony_exit();
-    if (cmd == 2) harmony_help();
-    if (cmd == 3) harmony_rename();
+    if (cmd == 2) harmony_help(Q);
+    if (cmd == 3) harmony_rename(Q, usr, server_socket);
 }
 
 // Function: A function that represents the --quit and --exit command and shuts down the client
@@ -47,27 +42,31 @@ void harmony_exit() {
 }
 
 // Function: A function that represents the --help command: sends a server message describing possible commands
-// Arguments: None
+// Arguments: The harmony_queue to which the help message will be added to
 // Return Values: None
-void harmony_help() {
+void harmony_help(struct harmony_queue *Q) {
     // Creating Message
-    data = calloc(1, sizeof(struct harmony_message));
+    struct harmony_message *data = calloc(1, sizeof(struct harmony_message));
     data = new_node(harmony_help_message, "Server", 0, get_time(), 0);
 
     // Adding To Queue
     update_queue(Q, data);
+
+    // Exiting Function
+    free(data);
+    return;
 }
 
 // Function: A function that represents the --rename command: allows user to type a new username and replaces the older username
-// Arguments: None
+// Arguments: The harmony_queue where the server message is going to, the original username, and the server_socket currently connected to
 // Return Values: None
-void harmony_rename() {
+void harmony_rename(struct harmony_queue *Q, char *usr, int server_socket) {
     // Saving Old Username
     char* oldusr = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
     strcpy(oldusr, usr);
 
     // Allocating Variables
-    data = calloc(1, sizeof(struct harmony_message));
+    struct harmony_message *data = calloc(1, sizeof(struct harmony_message));
     harmony_rename_message = calloc(HARMONY_BUFFER_SIZE, sizeof(char));
 
     // Asking For Username
@@ -90,4 +89,8 @@ void harmony_rename() {
     if (err1 == -1) {
         print_error(-1, "Client: Unable To Send Data To Server");
     }
+
+    // Exiting Function
+    free(data);
+    return;
 }

@@ -5,7 +5,7 @@
 
 ## Proposal
 ### Statement
-We want to create a group chat service that uses the design of applications like Slack or Discord as an example. Some of the features we are aiming for include 
+We want to create a group chat service that uses the design of applications like Slack or Discord as an example. Some of the features we are aiming for include
 - Memory and retaining past messages in the current session
 - Displaying messages and typing simultaneously
 - Multiple channels
@@ -64,24 +64,32 @@ git clone git@github.com:edward-wu-19/Project-02-Harmony.git
 cd Project-02-Harmony
 ```
 - Compile using `make`
-- Initiate server using `make server`
-- Start client using `make client`
+- If you want to connection to the digital ocean droplet server that _should_ be running use 'make client'
+- If you want to run stuff locally
+    - Initiate server using `make server`
+    - Start client using `./bin/client "IP_ADDRESS OF SERVER"`
 
 ### Required Libraries
 None.
 
 ### Features
-- A custom harmony_message struct that records the message, user, channel sent, and time sent
+- A custom harmony_message struct that records the message, user, channel sent, and time sent that is stored in a harmony_queue struct
 - A message is sent by the server when a new client joins or a client leaves
+- Basic commands like --help, --rename, --quit, --exit
+- We ended up not doing the forking server, and used select to accept clients and send data between clients using only one process
+- Signal processing and properly shutting down of client and server side
+- Basic input sanitization
+- A droplet that is hosting the server side of the project, and allows for automatic connection (should be running at all times)
 
 ### Next Steps
 - Separate channels
 - Colored text and names to identify server alerts and messages
-- Make usernames unique
-- Have IDs continue (Currently, if a client closes the connection, their ID is reused)
 
 ### Bugs
 - Closing the server while a client is selecting a name will not close their select name screen
+- Sometimes while typing regularly the client side spacing becomes weird but after a while it fixes itself, we have no idea why this occurs, but we think it has to do with data transferring issues
+- Similar to the one above sometimes the client prints out a message as coming from a different client than the one it actually came from, this problem fixes itself after waiting for a bit as well
+- Basically, just type slowly and it should work normally
 
 ### Limitations
 - The maximum username length is 32

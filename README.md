@@ -69,7 +69,7 @@ cd Project-02-Harmony
     - Initiate server using `make server`
     - Start client using `./bin/client "IP_ADDRESS OF SERVER"`
 
-### Required Libraries
+### Required External Libraries
 None.
 
 ### Features
@@ -100,3 +100,74 @@ None.
 - `--exit` or `--quit` : Takes in either zero (defaults to 0) or one numeric argument and exits the shell with that number as its exit value
 - `--help` : Prints a list of all possible commands
 - `--rename` : Allows a client to rename itself, makes a server alert
+
+### Function Headers
+
+#### client.c
+```
+void client_exit();
+char* pick_name();
+```
+
+#### command.c
+```
+int check_command(char *buff);
+void run_command(int cmd);
+void harmony_exit();
+void harmony_help();
+void harmony_rename();
+```
+
+#### client/connect.c
+```
+int client_handshake(char *ip);
+```
+
+#### parse.c
+```
+void print_error(int err, char *msg);
+void trim(char *p);
+char *get_input(char *buff);
+```
+
+#### queue.c
+```
+struct harmony_message {
+    char val[HARMONY_BUFFER_SIZE], sender[HARMONY_USERNAME_SIZE], time[HARMONY_USERNAME_SIZE];
+    struct harmony_message *next;
+    int channel, id;
+};
+struct harmony_queue {
+    int size;
+    struct harmony_message *front, *back;
+};
+struct harmony_message *new_node(char *msg, char* usr, int chn, char* time, int id);
+struct harmony_queue *create_queue();
+void queue_push(struct harmony_queue *Q, char *msg, char *usr, int chn, int id);
+void queue_pop(struct harmony_queue *Q);
+void update_queue(struct harmony_queue *Q, struct harmony_message *data);
+void free_queue(struct harmony_queue *Q);
+```
+
+#### screen.c
+```
+#define max(a, b) (a >= b ? a : b)
+#define min(a, b) (a <= b ? a : b)
+void clear_screen();
+struct winsize *get_terminal_size();
+void print_screen(struct harmony_queue *Q);
+char* get_time();
+```
+
+#### server/connect.c
+```
+void print_error(int err, char *msg);
+int server_setup();
+int server_handshake(int listen_socket);
+char *ip_to_string(const struct sockaddr *sa, char *s, int len);
+struct harmony_message {
+    char val[HARMONY_BUFFER_SIZE], sender[HARMONY_USERNAME_SIZE], time[HARMONY_USERNAME_SIZE];
+    struct harmony_message *next;
+    int channel, id;
+};
+```

@@ -64,7 +64,7 @@ git clone git@github.com:edward-wu-19/Project-02-Harmony.git
 cd Project-02-Harmony
 ```
 - Compile using `make`
-- If you want to connection to the digital ocean droplet server that _should_ be running use 'make client'
+- If you want to connection to the digital ocean droplet server that _should_ be running use `make client`
 - If you want to run stuff locally
     - Initiate server using `make server`
     - Start client using `./bin/client "IP_ADDRESS OF SERVER"`

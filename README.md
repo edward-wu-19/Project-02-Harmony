@@ -104,13 +104,13 @@ None.
 ### Function Headers
 
 #### client.c
-```
+```c
 void client_exit();
 char* pick_name();
 ```
 
 #### command.c
-```
+```c
 int check_command(char *buff);
 void run_command(int cmd);
 void harmony_exit();
@@ -119,19 +119,19 @@ void harmony_rename();
 ```
 
 #### client/connect.c
-```
+```c
 int client_handshake(char *ip);
 ```
 
 #### parse.c
-```
+```c
 void print_error(int err, char *msg);
 void trim(char *p);
 char *get_input(char *buff);
 ```
 
 #### queue.c
-```
+```c
 struct harmony_message {
     char val[HARMONY_BUFFER_SIZE], sender[HARMONY_USERNAME_SIZE], time[HARMONY_USERNAME_SIZE];
     struct harmony_message *next;
@@ -150,7 +150,7 @@ void free_queue(struct harmony_queue *Q);
 ```
 
 #### screen.c
-```
+```c
 #define max(a, b) (a >= b ? a : b)
 #define min(a, b) (a <= b ? a : b)
 void clear_screen();
@@ -160,7 +160,7 @@ char* get_time();
 ```
 
 #### server/connect.c
-```
+```c
 void print_error(int err, char *msg);
 int server_setup();
 int server_handshake(int listen_socket);
@@ -170,4 +170,9 @@ struct harmony_message {
     struct harmony_message *next;
     int channel, id;
 };
+```
+
+#### server.c
+```c
+void server_exit();
 ```

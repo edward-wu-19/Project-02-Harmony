@@ -7,10 +7,17 @@ struct harmony_message *data;
 int cmd, server_socket, maxfd;
 fd_set init, cpy;
 
+char* harmony_help_message = """Harmony Help: \n\
+    --exit : Terminates the program. \n\
+    --help : Returns this message. \n\
+    --quit : Terminates the program.\n\
+Only you can see this message.\n""";
+
 int check_command(char *buff) {
     // Checking With Command List
     if (strcmp(buff, "--quit") == 0 || strcmp(buff, "--exit") == 0) return 1;
-    // if (strcmp(buff, "--help") == 0) return 2;
+    if (strcmp(buff, "--help") == 0) return 2;
+    if (strcmp(buff, "--rename") == 0) return 3;
 
     // Exiting Function
     return 0;
@@ -19,6 +26,8 @@ int check_command(char *buff) {
 void run_command(int cmd) {
     // Running Commands
     if (cmd == 1) harmony_exit();
+    if (cmd == 2) harmony_help();
+    if (cmd == 3) harmony_rename();
     // if (cmd == 2) harmony_help();
 }
 
@@ -33,20 +42,22 @@ void harmony_exit() {
     exit(0);
 }
 
-// void harmony_help(){
-//     buff = calloc(HARMONY_BUFFER_SIZE, sizeof(char));
-//     usr = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
-//     data = calloc(1, sizeof(struct harmony_message));
+void harmony_help(){
+    data = calloc(1, sizeof(struct harmony_message));
 
-//     data = new_node(buff, usr, chn, get_time(), 0);
+    data = new_node(harmony_help_message, "Server", 0, get_time(), 0);
 
-//     int err1 = write(server_socket, data, sizeof(struct harmony_message));
-//     if (err1 == -1) {
-//         print_error(-1, "Client; Unable To Send Data To Server");
-//     }
+    update_queue(Q, data);
+}
 
-//     printf("""Server: \n\
-//     --exit : Terminates the program.\n\
-//     --help : Returns this message.\n\
-//     --quit : Terminates the program.\n""");
-// }
+void harmony_rename(){
+    // *char harmony_rename = "Please enter your new name: ";
+    // usr = get_input(usr);
+
+    // int err3 = write(fd, harmony_help, sizeof(struct harmony_message));
+    //     if (err3 == -1) {
+    //         print_error(-1, "Server: Unable To Send Help");
+    //         continue;
+    //     }
+    
+}

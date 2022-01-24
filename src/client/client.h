@@ -46,6 +46,7 @@ int check_command(char *buff);
 void run_command(int cmd);
 void harmony_exit();
 void harmony_help();
+void harmony_rename();
 
 // connect.c
 int client_handshake();

@@ -1,6 +1,8 @@
 #include "client.h"
 
-// Clears The Terminal Screen
+// Function: A function that clears the terminal screen
+// Arguments: None
+// Return Values: None
 void clear_screen() {
     // ANSI Escape Codes (Not Sure About Window Compatability)
     // \x1B[H Moves Cursor To Home Position
@@ -12,7 +14,9 @@ void clear_screen() {
     return;
 }
 
-// Gets Terminal Size
+// Function: A function that gets a struct containining the size of the current terminal window
+// Arguments: None
+// Return Values: None
 struct winsize *get_terminal_size() {
     // Obtaining Window Size
     struct winsize *w = calloc(1, sizeof(struct winsize *));
@@ -24,7 +28,9 @@ struct winsize *get_terminal_size() {
     return w;
 }
 
-// Prints The Terminal Screen
+// Function: A function that clears the screen and prints out all the messages in the current harmony_queue
+// Arguments: The harmony_queue that is to be printed
+// Return Values: None
 void print_screen(struct harmony_queue *Q) {
     // Clearing Screen
     clear_screen();
@@ -57,6 +63,9 @@ void print_screen(struct harmony_queue *Q) {
     return;
 }
 
+// Function: A function that gets the current time
+// Arguments: None
+// Return Values: A string representing the current time
 char* get_time() {
     // Getting Current Time
     time_t t = time(NULL);

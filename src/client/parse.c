@@ -17,7 +17,9 @@ void print_error(int err, char *msg) {
     return;
 }
 
-// Removes Whitespace From A String
+// Function: Removes whitespace from a string
+// Arguments: The string to be trimmed.
+// Return Values: None
 void trim(char *s) {
     // Variable Declarations
     char *p = s;
@@ -33,7 +35,9 @@ void trim(char *s) {
     memmove(s, p, l + 1);
 }
 
-// Gets Input From The Terminal
+// Function: A function that gets input from the terminal
+// Arguments: The string where the input should be copied to
+// Return Values: The string that has the new data
 char *get_input(char *buff) {
     // Reading In User Input
     if (fgets(buff, HARMONY_BUFFER_SIZE, stdin) == NULL) return "";

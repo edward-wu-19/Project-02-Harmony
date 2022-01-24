@@ -1,5 +1,8 @@
 #include "client.h"
 
+// Function: Completes the client side of the three way handshake socket connection process
+// Arguments: A string representing the desired IP Address to connect to
+// Return Values: An integer representing the file descriptor of the socket
 int client_handshake(char *ip) {
     // Setting Up Hints Struct
     struct addrinfo *hints;

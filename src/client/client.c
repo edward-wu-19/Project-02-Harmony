@@ -7,6 +7,10 @@ struct harmony_message *data;
 int cmd, server_socket, maxfd, chn = 0;
 fd_set init, cpy;
 
+
+// Function: A function that properly ends the client program with ending messages and freeing data
+// Arguments: None
+// Return Values: None
 void client_exit() {
     // Generating Exit Message
     strcpy(buff, usr);
@@ -39,6 +43,9 @@ void client_exit() {
     exit(0);
 }
 
+// Function: Catches signals in the client program
+// Arguments: An integer that represents the signal that is caught
+// Return Values: None
 static void sighandler(int signo) {
     // SIGINT Case
     if (signo == SIGINT) {
@@ -51,6 +58,9 @@ static void sighandler(int signo) {
     return;
 }
 
+// Function: A function that asks the user for a username and sanitizes the username a bit
+// Arguments: None
+// Return Values: A string that represents the username typed
 char* pick_name() {
     // Declaring Variables
     usr = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
@@ -78,7 +88,9 @@ char* pick_name() {
     return usr;
 }
 
-// Main Function
+// Function: The main function that represents the running of the entire program
+// Arguments: argument count and the a singular argument that represents the desired ip address
+// Return Values: Regular main output
 int main(int argc, char **argv) {
     // Signal Handling
     signal(SIGINT, sighandler);

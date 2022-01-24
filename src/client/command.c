@@ -14,6 +14,9 @@ char* harmony_help_message = "Harmony Help: \n\
 Only you can see this message.";
 char* harmony_rename_message;
 
+// Function: Checks whether a given input is a command
+// Arguments: The string input that is being checked
+// Return Values: An integer that represents the id of the command or 0 if it isnt a command
 int check_command(char *buff) {
     // Checking With Command List
     if (strcmp(buff, "--quit") == 0 || strcmp(buff, "--exit") == 0) return 1;
@@ -24,6 +27,9 @@ int check_command(char *buff) {
     return 0;
 }
 
+// Function: A helper function that runs commands based on the command id
+// Arguments: An integer that represents the command id
+// Return Values: None
 void run_command(int cmd) {
     // Running Commands
     if (cmd == 1) harmony_exit();
@@ -31,13 +37,18 @@ void run_command(int cmd) {
     if (cmd == 3) harmony_rename();
 }
 
+// Function: A function that represents the --quit and --exit command and shuts down the client
+// Arguments: None
+// Return Values: None
 void harmony_exit() {
     // Exiting Program
     clear_screen();
     client_exit();
-    exit(0);
 }
 
+// Function: A function that represents the --help command: sends a server message describing possible commands
+// Arguments: None
+// Return Values: None
 void harmony_help() {
     // Creating Message
     data = calloc(1, sizeof(struct harmony_message));
@@ -47,6 +58,9 @@ void harmony_help() {
     update_queue(Q, data);
 }
 
+// Function: A function that represents the --rename command: allows user to type a new username and replaces the older username
+// Arguments: None
+// Return Values: None
 void harmony_rename() {
     // Saving Old Username
     char* oldusr = calloc(HARMONY_USERNAME_SIZE, sizeof(char));

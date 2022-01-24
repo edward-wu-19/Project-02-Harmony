@@ -17,6 +17,9 @@ void print_error(int err, char *msg) {
     return;
 }
 
+// Function: Sets up the listen socket of the server
+// Arguments: None
+// Return Values: The file descriptor of the listening socket
 int server_setup() {
     // Setting Up Hints Struct
     struct addrinfo *hints;
@@ -66,6 +69,9 @@ int server_setup() {
     return listen_socket;
 }
 
+// Function: A function that completes the connection between the client and the server
+// Arguments: The listening socket file descriptor
+// Return Values: An integer representing the client socket
 int server_handshake(int listen_socket) {
     // Variable Declarations
     int client_socket;
@@ -84,6 +90,9 @@ int server_handshake(int listen_socket) {
     return client_socket;
 }
 
+// Function: A function that gets an IP address in a readable format
+// Arguments: The sockaddr struct, the string to store the address, and the max length of the string
+// Return Values: The string that stores the address
 char *ip_to_string(const struct sockaddr *sa, char *s, int len) {
     if (sa->sa_family == AF_INET) { // IPv4 Case
         inet_ntop(AF_INET, &(((struct sockaddr_in *)sa)->sin_addr), s, len);

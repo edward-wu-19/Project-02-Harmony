@@ -1,6 +1,8 @@
 #include "client.h"
 
-// Creates A New Queue Node
+// Function: Helper function that creates a new harmony_message struct
+// Arguments: Data that should be saved in the struct
+// Return Values: A pointer to the struct created
 struct harmony_message *new_node(char *msg, char* usr, int chn, char* time, int id) {
     struct harmony_message *temp = (struct harmony_message *) calloc(1, sizeof(struct harmony_message));
     strncpy(temp->val, msg, HARMONY_BUFFER_SIZE);
@@ -13,14 +15,16 @@ struct harmony_message *new_node(char *msg, char* usr, int chn, char* time, int 
     else{
         strncpy(temp->sender, usr, HARMONY_USERNAME_SIZE);
     }
-    
+
     temp->next = NULL;
     temp->channel = chn; // 0 is default
     temp->id = id; // 0 is default
     return temp;
 }
 
-// Creates A New Queue
+// Function: Helper function that creates a harmony_queue struct
+// Arguments: None
+// Return Values: A pointer to the created harmony_queue
 struct harmony_queue *create_queue() {
     struct harmony_queue *Q = (struct harmony_queue *) calloc(1, sizeof(struct harmony_queue));
     Q->size = 0;
@@ -29,7 +33,9 @@ struct harmony_queue *create_queue() {
     return Q;
 }
 
-// Adds A Queue Node To The Queue
+// Function: Adds a new harmony_message to the end of a harmony_queue
+// Arguments: The harmony_queue and data representing the harmony_message
+// Return Values: None
 void queue_push(struct harmony_queue *Q, char *msg, char *usr, int chn, int id) {
     // Creating New Queue Node
     struct harmony_message *temp = new_node(msg, usr, chn, get_time(), id);
@@ -48,7 +54,9 @@ void queue_push(struct harmony_queue *Q, char *msg, char *usr, int chn, int id) 
     return;
 }
 
-// Removes A Queue Node From The Queue
+// Function: Removes the first harmony_message of a harmony_queue
+// Arguments: The harmony_queue that is getting a node removed
+// Return Values: None
 void queue_pop(struct harmony_queue *Q) {
     // If Empty Do Nothing
     if (Q->front == NULL) return;
@@ -68,7 +76,9 @@ void queue_pop(struct harmony_queue *Q) {
     return;
 }
 
-// Updates The Queue Properly
+// Function: A function that updates a harmony_queue with a new harmony_message and limits the size of the queue if needed
+// Arguments: The harmony_queue and the harmony_message
+// Return Values: None
 void update_queue(struct harmony_queue *Q, struct harmony_message *data) {
     // Adding Message To Queue
     queue_push(Q, data->val, data->sender, data->channel, data->id);
@@ -80,6 +90,9 @@ void update_queue(struct harmony_queue *Q, struct harmony_message *data) {
     return;
 }
 
+// Function: A function that loops through a harmony_queue and free each node
+// Arguments: The harmony_queue to be freed
+// Return Values: None
 void free_queue(struct harmony_queue *Q) {
     // If Empty Do Nothing
     if (Q->front == NULL) return;
@@ -95,5 +108,6 @@ void free_queue(struct harmony_queue *Q) {
     }
 
     // Exiting Function
+    free(Q);
     return;
 }

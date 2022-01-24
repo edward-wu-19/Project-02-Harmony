@@ -5,6 +5,9 @@ struct harmony_message *data;
 int fd, listen_socket, maxfd = 0, client, itr;
 fd_set init, cpy;
 
+// Function: Properly shuts down all current sockets, frees memory, and shuts down the server with ending messages
+// Arguments: None
+// Return Values: None
 void server_exit() {
     // Closing All Sockets
     for (itr = 3; itr <= maxfd; itr++) {
@@ -28,6 +31,9 @@ void server_exit() {
     exit(0);
 }
 
+// Function: Handles signal catching for the server program
+// Arguments: The signal that has been caught
+// Return Values: None
 static void sighandler(int signo) {
     // SIGINT Case
     if (signo == SIGINT) {
@@ -39,6 +45,9 @@ static void sighandler(int signo) {
     return;
 }
 
+// Function: A forever looping function that represents the creation of the server client connections and sends data between server and client
+// Arguments: None
+// Return Values: Regular main return values
 int main() {
     // Signal Handling
     signal(SIGINT, sighandler);

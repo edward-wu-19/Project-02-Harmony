@@ -79,7 +79,7 @@ None.
 - We ended up not doing the forking server, and used select to accept clients and send data between clients using only one process
 - Signal processing and properly shutting down of client and server side
 - Basic input sanitization
-- A droplet that is hosting the server side of the project, and allows for automatic connection (should be running at all times)
+- A digitalocean droplet that is hosting the server side of the project, and allows for automatic connection (should be running at all times)
 
 ### Next Steps
 - Separate channels

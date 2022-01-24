@@ -12,11 +12,8 @@ char* harmony_help_message = "Harmony Help: \n\
     --help : Returns this message. \n\
     --quit : Terminates the program.\n\
 Only you can see this message.\n";
-<<<<<<< HEAD
 
 char* harmony_rename_message;
-=======
->>>>>>> 3c98a879984f352635e7313ce12b125dfde25a64
 
 int check_command(char *buff) {
     // Checking With Command List

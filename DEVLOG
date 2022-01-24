@@ -51,3 +51,6 @@ wuEdw -- 2022-01-23 23:30
 
 wuEdw -- 2022-01-23 23:57
 - Added join and leave messages
+
+wuEdw -- 2022-01-24 00:09
+- Restricted usernames from being empty or Server

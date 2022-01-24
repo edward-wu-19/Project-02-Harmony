@@ -63,9 +63,26 @@ int main(int argc, char **argv) {
     data = calloc(1, sizeof(struct harmony_message));
 
     // Asking For Username And Color
-    clear_screen();
-    printf("Please Enter A Username: ");
-    usr = get_input(usr);
+    int appropriate_name = 0;
+    char* name_message = "";
+    while (!appropriate_name){
+        clear_screen();
+        printf("%s\n", name_message);
+        printf("Please Enter A Username: ");
+        usr = get_input(usr);
+        if (strcmp(usr, "") == 0){
+            name_message = "Your username cannot be empty.";
+        }
+        else if (strcmp(usr, "Server") == 0){
+            name_message = "Your username cannot be Server.";
+        }
+        else if (strcmp(usr, "server") == 0){
+            name_message = "Your username cannot be server.";
+        }
+        else{
+            appropriate_name = 1;
+        }
+    }
 
     // Completing Handshake
     if (argc == 2) server_socket = client_handshake(argv[1]);

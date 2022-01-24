@@ -47,6 +47,11 @@ int server_setup() {
         return -1;
     } else printf("Server: Successfully Binded Socket\n");
 
+    // Printing IP Address For Usage
+    char *s = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
+    s = ip_to_string(results->ai_addr, s, HARMONY_USERNAME_SIZE);
+    printf("Server: IP Address To Share - %s\n", s);
+
     // Setting Up Listen
     int err3 = listen(listen_socket, 10);
     if (err3 == -1) {
@@ -57,6 +62,7 @@ int server_setup() {
     // Exiting Function
     free(hints);
     freeaddrinfo(results);
+    free(s);
     return listen_socket;
 }
 
@@ -76,4 +82,15 @@ int server_handshake(int listen_socket) {
 
     // Exiting Function
     return client_socket;
+}
+
+char *ip_to_string(const struct sockaddr *sa, char *s, int len) {
+    if (sa->sa_family == AF_INET) { // IPv4 Case
+        inet_ntop(AF_INET, &(((struct sockaddr_in *)sa)->sin_addr), s, len);
+    } else if (sa->sa_family == AF_INET6) { // IPv6 Case
+        inet_ntop(AF_INET6, &(((struct sockaddr_in6 *)sa)->sin6_addr), s, len);
+    } else { // Error Case
+        strncpy(s, "Server: Unable To Get IP Address\n", len);
+    }
+    return s;
 }

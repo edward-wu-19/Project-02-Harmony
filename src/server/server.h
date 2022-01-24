@@ -16,6 +16,7 @@
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
+#include <arpa/inet.h>
 #include <sys/socket.h>
 
 // Color Constants (Not Sure About Window Compatability)
@@ -41,6 +42,7 @@
 void print_error(int err, char *msg);
 int server_setup();
 int server_handshake(int listen_socket);
+char *ip_to_string(const struct sockaddr *sa, char *s, int len);
 struct harmony_message {
     char val[HARMONY_BUFFER_SIZE], sender[HARMONY_USERNAME_SIZE], time[HARMONY_USERNAME_SIZE];
     struct harmony_message *next;

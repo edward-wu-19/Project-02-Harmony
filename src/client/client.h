@@ -49,7 +49,7 @@ void harmony_help();
 void harmony_rename();
 
 // connect.c
-int client_handshake();
+int client_handshake(char *ip);
 
 // parse.c
 void print_error(int err, char *msg);

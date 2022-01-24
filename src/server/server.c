@@ -24,7 +24,7 @@ void server_exit() {
 
     // Exiting Function
     printf("Server: Successfully Shut Down\n");
-    printf("Thank You For Using Harmony\n");
+    printf("Thank You For Using Harmony (Made By Mohammad Khan And Edward Wu)\n");
     exit(0);
 }
 

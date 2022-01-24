@@ -1,6 +1,6 @@
 #include "client.h"
 
-int client_handshake() {
+int client_handshake(char *ip) {
     // Setting Up Hints Struct
     struct addrinfo *hints;
     hints = calloc(1, sizeof(struct addrinfo));
@@ -9,7 +9,7 @@ int client_handshake() {
 
     // Getting IP Information
     struct addrinfo *results;
-    int err1 = getaddrinfo(HARMONY_TEST_IP, HARMONY_PORT, hints, &results);
+    int err1 = getaddrinfo(ip, HARMONY_PORT, hints, &results);
     if (err1 == -1) {
         print_error(-1, "Client: Unable To Get IP Information");
         return -1;

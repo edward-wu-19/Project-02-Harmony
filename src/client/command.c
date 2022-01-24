@@ -7,11 +7,11 @@ struct harmony_message *data;
 int cmd, server_socket, maxfd;
 fd_set init, cpy;
 
-char* harmony_help_message = """Harmony Help: \n\
+char* harmony_help_message = "Harmony Help: \n\
     --exit : Terminates the program. \n\
     --help : Returns this message. \n\
     --quit : Terminates the program.\n\
-Only you can see this message.\n""";
+Only you can see this message.\n";
 
 int check_command(char *buff) {
     // Checking With Command List
@@ -28,29 +28,25 @@ void run_command(int cmd) {
     if (cmd == 1) harmony_exit();
     if (cmd == 2) harmony_help();
     if (cmd == 3) harmony_rename();
-    // if (cmd == 2) harmony_help();
 }
 
 void harmony_exit() {
-    // Clearing screen
-    clear_screen();
-
-    // Printing Goodbye Message
-    printf("Thank You For Using Harmony (Made By Mohammad Khan And Edward Wu)\n");
-
     // Exiting Program
+    clear_screen();
+    client_exit();
     exit(0);
 }
 
-void harmony_help(){
+void harmony_help() {
+    // Creating Message
     data = calloc(1, sizeof(struct harmony_message));
-
     data = new_node(harmony_help_message, "Server", 0, get_time(), 0);
 
+    // Adding To Queue
     update_queue(Q, data);
 }
 
-void harmony_rename(){
+void harmony_rename() {
     // *char harmony_rename = "Please enter your new name: ";
     // usr = get_input(usr);
 
@@ -59,5 +55,4 @@ void harmony_rename(){
     //         print_error(-1, "Server: Unable To Send Help");
     //         continue;
     //     }
-    
 }

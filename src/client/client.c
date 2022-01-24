@@ -12,7 +12,7 @@ void client_exit() {
     int err = close(server_socket);
     if (err == -1) {
         print_error(-1, "Client: Unable To Close Server Socket");
-        return;
+        exit(-1);
     }
 
     // Freeing Stuff
@@ -113,8 +113,8 @@ int main() {
 
             // If Empty End Client
             if (err2 == 0) {
-                close(server_socket);
-                return 0;
+                clear_screen();
+                client_exit();
             }
 
             // Updating Message Queue

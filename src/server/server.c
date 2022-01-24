@@ -130,5 +130,4 @@ int main() {
     }
 
     server_exit();
-    return 0;
 }

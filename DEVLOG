@@ -23,3 +23,11 @@ khanMoh -- 2022-01-23 12:30
     - Multiple clients can connect to one server
     - Clients can send to themselves and receive messages from themselves through the server
     - Integrated wuEdw's previous changes
+
+khanMoh -- 2022-01-23 21:00
+- Completed multiple client and server interactions
+    - Multiple clients can talk to each other through server
+    - Differentiated clients through separate ids
+    - Added basic signal processing
+    - Added shutdown protocols
+    - Updated user interface and message struct

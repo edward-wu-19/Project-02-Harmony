@@ -1,12 +1,59 @@
 #include "client.h"
 
+// Global Variables
+struct harmony_queue *Q;
+char *buff, *usr;
+struct harmony_message *data;
+int cmd, server_socket, maxfd, chn = 0;
+fd_set init, cpy;
+
+void client_exit() {
+    // Closing Socket
+    int err = close(server_socket);
+    if (err == -1) {
+        print_error(-1, "Client: Unable To Close Server Socket");
+        return;
+    }
+
+    // Freeing Stuff
+    free(buff);
+    free(usr);
+    free(data);
+    free_queue(Q);
+
+    // Ending Program
+    printf("Client: Successfully Shut Down\n");
+    printf("Thanks For Using Harmony\n");
+    exit(0);
+}
+
+static void sighandler(int signo) {
+    // SIGINT Case
+    if (signo == SIGINT) {
+        // Exiting Function
+        clear_screen();
+        client_exit();
+    }
+
+    // Exiting Function
+    return;
+}
+
 // Main Function
 int main() {
+    // Signal Handling
+    signal(SIGINT, sighandler);
+
     // Variable Declarations
-    struct harmony_queue *Q = create_queue();
-    char *buff = calloc(HARMONY_BUFFER_SIZE, sizeof(char));
-    int cmd, server_socket, maxfd;
-    fd_set init, cpy;
+    Q = create_queue();
+    buff = calloc(HARMONY_BUFFER_SIZE, sizeof(char));
+    usr = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
+    data = calloc(1, sizeof(struct harmony_message));
+
+    // Asking For Username And Color
+    clear_screen();
+    printf("Please Enter A Username: ");
+    usr = get_input(usr);
 
     // Completing Handshake
     server_socket = client_handshake();
@@ -34,7 +81,7 @@ int main() {
             print_error(-1, "Client: Unable To Select");
         }
 
-        // Checking Which File Descriptor Input Is From
+        // Checking From STDIN
         if (FD_ISSET(0, &cpy)) {
             // Getting STDIN Input
             buff = get_input(buff);
@@ -45,14 +92,21 @@ int main() {
             if ((cmd = check_command(buff))) { // If Command Run It
                 run_command(cmd);
             } else { // Else Write To Server
-                int err1 = write(server_socket, buff, sizeof(buff));
+                // Creating Message Struct
+                data = new_node(buff, usr, chn, get_time(), 0);
+
+                // Sending Data
+                int err1 = write(server_socket, data, sizeof(struct harmony_message));
                 if (err1 == -1) {
                     print_error(-1, "Client; Unable To Send Data To Server");
                 }
             }
-        } else {
+        }
+
+        // Checking From Server
+        if (FD_ISSET(server_socket, &cpy)) {
             // Reading From Server
-            int err2 = read(server_socket, buff, sizeof(buff));
+            int err2 = read(server_socket, data, sizeof(struct harmony_message));
             if (err2 == -1) {
                 print_error(-1, "Client: Unable To Read Data From Server");
             }
@@ -64,10 +118,11 @@ int main() {
             }
 
             // Updating Message Queue
-            update_queue(Q, buff);
+            update_queue(Q, data);
         }
     }
 
-    close(server_socket);
-    return 0;
+    // Ending Program
+    clear_screen();
+    client_exit();
 }

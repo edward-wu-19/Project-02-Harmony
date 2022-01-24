@@ -32,6 +32,7 @@
 // Number Constants
 #define HARMONY_BUFFER_SIZE 2048
 #define HARMONY_QUEUE_SIZE 128
+#define HARMONY_USERNAME_SIZE 32
 #define HARMONY_PORT "9002"
 #define HARMONY_TEST_IP "127.0.0.1"
 #define HARMONY_IP "0.0.0.0"
@@ -40,5 +41,10 @@
 void print_error(int err, char *msg);
 int server_setup();
 int server_handshake(int listen_socket);
+struct harmony_message {
+    char val[HARMONY_BUFFER_SIZE], sender[HARMONY_USERNAME_SIZE], time[HARMONY_USERNAME_SIZE];
+    struct harmony_message *next;
+    int channel, id;
+};
 
 #endif

@@ -31,16 +31,19 @@ void print_screen(struct harmony_queue *Q) {
 
     // Obtaining Terminal Size And Starting Node
     struct winsize *w = get_terminal_size();
-    int height = w->ws_row, i = 0, width = w->ws_col;
-    struct harmony_message *node = Q->front;
-
+    int height = w->ws_row, i = 0, width = w->ws_col, j = 0;
+    struct harmony_message *node = Q->front, *prev = Q->front;
+    //
     // Printing Blank Lines If Needed
     for (; i < max(0, height-(Q->size)-2); i++) printf("\n");
 
     // Printing Out Actual Messages
     while (node != NULL) {
-        printf("\n\n%s", node->val);
+        if (prev->id == node->id && j != 0) printf("\n%s", node->val);
+        else printf("\n\n%s (id:%03d) - %s\n%s", node->sender, node->id, node->time, node->val);
+        prev = node;
         node = node->next;
+        if (j == 0) j++;
     }
 
     // Spacing Out Messages
@@ -62,9 +65,13 @@ char* get_time() {
     char *tm = ctime(&t);
 
     // Error Checking
-    if (tm == NULL) {
-        print_error(-1, "Unable To Get Time");
-    }
+    if (tm == NULL) print_error(-1, "Unable To Get Time");
+
+    // Getting Rid Of Extraneous Information
+    tm = tm+4;
+
+    // Ending To Get Rid Of Extraneous Information
+    *(strchr(tm, '\n')-8) = '\0';
 
     // Exiting Function
     return tm;

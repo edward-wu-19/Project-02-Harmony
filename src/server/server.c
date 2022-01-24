@@ -1,10 +1,50 @@
 #include "server.h"
 
+// Global Variables
+struct harmony_message *data;
+int fd, listen_socket, maxfd = 0, client, itr;
+fd_set init, cpy;
+
+void server_exit() {
+    // Closing All Sockets
+    for (itr = 3; itr <= maxfd; itr++) {
+        // Checking If Socket Is Valid
+        if (fcntl(itr, F_GETFL) == -1) continue;
+
+        // Closing Socket
+        int err = close(itr);
+        if (err == -1) {
+            print_error(-1, "Server: Unable To Close Client Socket");
+            continue;
+        }
+    }
+
+    // Freeing Data
+    free(data);
+
+    // Exiting Function
+    printf("Server: Successfully Shut Down\n");
+    printf("Thanks For Using Harmony\n");
+    exit(0);
+}
+
+static void sighandler(int signo) {
+    // SIGINT Case
+    if (signo == SIGINT) {
+        // Exiting Normally
+        server_exit();
+    }
+
+    // Exiting Function
+    return;
+}
+
 int main() {
+    // Signal Handling
+    signal(SIGINT, sighandler);
+
     // Variable Declarations
-    int fd, listen_socket, maxfd, client;
-    fd_set init, cpy;
-    char *buff = calloc(HARMONY_BUFFER_SIZE, sizeof(char));
+    data = calloc(1, sizeof(struct harmony_message));
 
     // Initializing Original FD Set
     FD_ZERO(&init);
@@ -35,7 +75,7 @@ int main() {
                     if (client > maxfd) maxfd = client;
                 } else {
                     // Get Message From Existing Client
-                    int err1 = read(fd, buff, sizeof(buff));
+                    int err1 = read(fd, data, sizeof(struct harmony_message));
                     if (err1 == -1) {
                         print_error(-1, "Server: Unable To Read Data");
                         continue;
@@ -49,11 +89,21 @@ int main() {
                             print_error(-1, "Server: Unable To Close File Descriptor");
                             continue;
                         }
-                    } else { // Send Data To All Other Clients
-                        int err3 = write(fd, buff, sizeof(buff));
-                        if (err3 == -1) {
-                            print_error(-1, "Server: Unable To Write Data");
-                            continue;
+                    } else {
+                        // Updating Message Struct
+                        data->id = fd;
+
+                        // Send Data To All Other Clients
+                        for (itr = 4; itr <= maxfd; itr++) {
+                            // Checking If File Descriptor Is Valid
+                            if (fcntl(itr, F_GETFL) == -1) continue;
+
+                            // Sending Data
+                            int err3 = write(itr, data, sizeof(struct harmony_message));
+                            if (err3 == -1) {
+                                print_error(-1, "Server: Unable To Write Data");
+                                continue;
+                            }
                         }
                     }
                 }
@@ -61,6 +111,6 @@ int main() {
         }
     }
 
-    close(listen_socket);
+    server_exit();
     return 0;
 }

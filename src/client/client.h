@@ -4,9 +4,9 @@
 #define CLIENT
 
 // Library Imports
+#include <time.h>
 #include <stdio.h>
 #include <fcntl.h>
-#include <time.h>
 #include <errno.h>
 #include <ctype.h>
 #include <netdb.h>
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <ncurses.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
@@ -33,9 +34,13 @@
 // Number Constants
 #define HARMONY_BUFFER_SIZE 2048
 #define HARMONY_QUEUE_SIZE 128
+#define HARMONY_USERNAME_SIZE 32
 #define HARMONY_PORT "9002"
 #define HARMONY_TEST_IP "127.0.0.1"
 #define HARMONY_IP "0.0.0.0"
+
+// client.c
+void client_exit();
 
 // command.c
 int check_command(char *buff);
@@ -52,19 +57,20 @@ char *get_input(char *buff);
 
 // queue.c
 struct harmony_message {
-    char *val, *sender, *time;
+    char val[HARMONY_BUFFER_SIZE], sender[HARMONY_USERNAME_SIZE], time[HARMONY_USERNAME_SIZE];
     struct harmony_message *next;
-    int channel;
+    int channel, id;
 };
 struct harmony_queue {
     int size;
     struct harmony_message *front, *back;
 };
-struct harmony_message *new_node(char *msg);
+struct harmony_message *new_node(char *msg, char* usr, int chn, char* time, int id);
 struct harmony_queue *create_queue();
-void queue_push(struct harmony_queue *Q, char *msg);
+void queue_push(struct harmony_queue *Q, char *msg, char *usr, int chn, int id);
 void queue_pop(struct harmony_queue *Q);
-void update_queue(struct harmony_queue *Q, char *msg);
+void update_queue(struct harmony_queue *Q, struct harmony_message *data);
+void free_queue(struct harmony_queue *Q);
 
 // screen.c
 #define max(a, b) (a >= b ? a : b)

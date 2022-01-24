@@ -98,7 +98,7 @@ int main() {
                 // Sending Data
                 int err1 = write(server_socket, data, sizeof(struct harmony_message));
                 if (err1 == -1) {
-                    print_error(-1, "Client; Unable To Send Data To Server");
+                    print_error(-1, "Client: Unable To Send Data To Server");
                 }
             }
         }

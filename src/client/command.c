@@ -7,11 +7,13 @@ struct harmony_message *data;
 int cmd, server_socket, maxfd;
 fd_set init, cpy;
 
-char* harmony_help_message = """Harmony Help: \n\
+char* harmony_help_message = "Harmony Help: \n\
     --exit : Terminates the program. \n\
     --help : Returns this message. \n\
     --quit : Terminates the program.\n\
-Only you can see this message.\n""";
+Only you can see this message.\n";
+
+char* harmony_rename_message;
 
 int check_command(char *buff) {
     // Checking With Command List
@@ -51,13 +53,31 @@ void harmony_help(){
 }
 
 void harmony_rename(){
-    // *char harmony_rename = "Please enter your new name: ";
-    // usr = get_input(usr);
+    char* oldusr;
+    strcpy(oldusr, usr); 
 
-    // int err3 = write(fd, harmony_help, sizeof(struct harmony_message));
-    //     if (err3 == -1) {
-    //         print_error(-1, "Server: Unable To Send Help");
-    //         continue;
-    //     }
-    
+    data = calloc(1, sizeof(struct harmony_message));
+    harmony_rename_message = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
+
+    // Asking For Username And Color
+    clear_screen();
+    printf("Please Enter A New Username: ");
+    usr = get_input(usr);
+
+    print_screen(Q);
+
+    strcpy(harmony_rename_message, oldusr);
+    strcat(harmony_rename_message, " has renamed themselves to ");
+    strcat(harmony_rename_message, usr);
+    strcat(harmony_rename_message, ".");
+
+    printf("%s\n", harmony_rename_message);
+
+    data = new_node(harmony_rename_message, "Server", 0, get_time(), 0);
+
+    // Sending Data
+    int err1 = write(server_socket, data, sizeof(struct harmony_message));
+    if (err1 == -1) {
+        print_error(-1, "Client: Unable To Send Data To Server");
+    }
 }

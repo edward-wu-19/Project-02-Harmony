@@ -59,7 +59,6 @@ int main(int argc, char **argv) {
     // Completing Handshake
     if (argc == 2) server_socket = client_handshake(argv[1]);
     else server_socket = client_handshake(HARMONY_IP);
-
     if (server_socket == -1) {
         print_error(-1, "Client: Unable To Connect To Server");
         return -1;

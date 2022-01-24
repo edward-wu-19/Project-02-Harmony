@@ -92,7 +92,7 @@ None.
 - Basically, just type slowly and it should work normally
 
 ### Limitations
-- The maximum username length is 32
+- The maximum username length is 32 characters
 - The maximum queue size is 128 messages
 - The maximum buffer size is 2048 characters
 

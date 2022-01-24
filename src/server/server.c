@@ -24,7 +24,7 @@ void server_exit() {
 
     // Exiting Function
     printf("Server: Successfully Shut Down\n");
-    printf("Thanks For Using Harmony\n");
+    printf("Thank You For Using Harmony\n");
     exit(0);
 }
 
@@ -51,6 +51,13 @@ int main() {
     listen_socket = server_setup();
     FD_SET(listen_socket, &init);
     maxfd = listen_socket;
+
+    // Initializing Help Message
+    char* harmony_help = """Harmony Help: \n\
+    --exit : Terminates the program. \n\
+    --help : Returns this message. \n\
+    --quit : Terminates the program.\n\
+    Only you can see this message.\n""";
 
     while (1) {
         // Making Copy Of Clients
@@ -93,17 +100,28 @@ int main() {
                         // Updating Message Struct
                         data->id = fd;
 
-                        // Send Data To All Other Clients
-                        for (itr = 4; itr <= maxfd; itr++) {
-                            // Checking If File Descriptor Is Valid
-                            if (fcntl(itr, F_GETFL) == -1) continue;
-
-                            // Sending Data
-                            int err3 = write(itr, data, sizeof(struct harmony_message));
+                        // --help case
+                        if (strcmp(data->val, "--help") == 0){
+                            int err3 = write(fd, harmony_help, sizeof(struct harmony_message));
                             if (err3 == -1) {
-                                print_error(-1, "Server: Unable To Write Data");
+                                print_error(-1, "Server: Unable To Send Help");
                                 continue;
                             }
+                        }
+
+                        else{
+                            // Send Data To All Other Clients
+                            for (itr = 4; itr <= maxfd; itr++) {
+                                // Checking If File Descriptor Is Valid
+                                if (fcntl(itr, F_GETFL) == -1) continue;
+
+                                // Sending Data
+                                int err3 = write(itr, data, sizeof(struct harmony_message));
+                                if (err3 == -1) {
+                                    print_error(-1, "Server: Unable To Write Data");
+                                    continue;
+                                }
+                            } 
                         }
                     }
                 }

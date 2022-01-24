@@ -4,8 +4,16 @@
 struct harmony_message *new_node(char *msg, char* usr, int chn, char* time, int id) {
     struct harmony_message *temp = (struct harmony_message *) calloc(1, sizeof(struct harmony_message));
     strncpy(temp->val, msg, HARMONY_BUFFER_SIZE);
-    strncpy(temp->sender, usr, HARMONY_USERNAME_SIZE);
     strncpy(temp->time, time, HARMONY_USERNAME_SIZE);
+
+    // Adding server as username
+    if (strcmp(usr, "") == 0){
+        strncpy(temp->sender, "Server", HARMONY_USERNAME_SIZE);
+    }
+    else{
+        strncpy(temp->sender, usr, HARMONY_USERNAME_SIZE);
+    }
+    
     temp->next = NULL;
     temp->channel = chn; // 0 is default
     temp->id = id; // 0 is default

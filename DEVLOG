@@ -31,3 +31,7 @@ khanMoh -- 2022-01-23 21:00
     - Added basic signal processing
     - Added shutdown protocols
     - Updated user interface and message struct
+
+wuEdw -- 2022-01-23 21:59
+- Added harmony_help feature
+- Created server user

@@ -23,7 +23,7 @@ void client_exit() {
 
     // Ending Program
     printf("Client: Successfully Shut Down\n");
-    printf("Thanks For Using Harmony\n");
+    printf("Thank You For Using Harmony\n");
     exit(0);
 }
 

@@ -14,7 +14,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <ncurses.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
@@ -46,6 +45,7 @@ void client_exit();
 int check_command(char *buff);
 void run_command(int cmd);
 void harmony_exit();
+void harmony_help();
 
 // connect.c
 int client_handshake();

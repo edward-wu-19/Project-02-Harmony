@@ -2,7 +2,7 @@
 
 // Global Variables
 struct harmony_queue *Q;
-char *buff, *usr;
+char *buff, *usr, *ip;
 struct harmony_message *data;
 int cmd, server_socket, maxfd, chn = 0;
 fd_set init, cpy;
@@ -19,11 +19,12 @@ void client_exit() {
     free(buff);
     free(usr);
     free(data);
+    free(ip);
     free_queue(Q);
 
     // Ending Program
     printf("Client: Successfully Shut Down\n");
-    printf("Thank You For Using Harmony\n");
+    printf("Thank You For Using Harmony (Made By Mohammad Khan And Edward Wu)\n");
     exit(0);
 }
 
@@ -40,7 +41,7 @@ static void sighandler(int signo) {
 }
 
 // Main Function
-int main() {
+int main(int argc, char **argv) {
     // Signal Handling
     signal(SIGINT, sighandler);
 
@@ -56,7 +57,8 @@ int main() {
     usr = get_input(usr);
 
     // Completing Handshake
-    server_socket = client_handshake();
+    if (argc == 2) server_socket = client_handshake(argv[1]);
+    else server_socket = client_handshake(HARMONY_IP);
     if (server_socket == -1) {
         print_error(-1, "Client: Unable To Connect To Server");
         return -1;

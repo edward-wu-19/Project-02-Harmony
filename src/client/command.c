@@ -12,8 +12,11 @@ char* harmony_help_message = "Harmony Help: \n\
     --help : Returns this message. \n\
     --quit : Terminates the program.\n\
 Only you can see this message.\n";
+<<<<<<< HEAD
 
 char* harmony_rename_message;
+=======
+>>>>>>> 3c98a879984f352635e7313ce12b125dfde25a64
 
 int check_command(char *buff) {
     // Checking With Command List
@@ -30,25 +33,21 @@ void run_command(int cmd) {
     if (cmd == 1) harmony_exit();
     if (cmd == 2) harmony_help();
     if (cmd == 3) harmony_rename();
-    // if (cmd == 2) harmony_help();
 }
 
 void harmony_exit() {
-    // Clearing screen
-    clear_screen();
-
-    // Printing Goodbye Message
-    printf("Thank You For Using Harmony (Made By Mohammad Khan And Edward Wu)\n");
-
     // Exiting Program
+    clear_screen();
+    client_exit();
     exit(0);
 }
 
-void harmony_help(){
+void harmony_help() {
+    // Creating Message
     data = calloc(1, sizeof(struct harmony_message));
-
     data = new_node(harmony_help_message, "Server", 0, get_time(), 0);
 
+    // Adding To Queue
     update_queue(Q, data);
 }
 

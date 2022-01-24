@@ -38,3 +38,7 @@ wuEdw -- 2022-01-23 21:59
 
 wuEdw -- 2022-01-23 22:17
 - Revised harmony_help to be on client side
+
+wuEdw -- 2022-01-23 23:30
+- Added rename feature
+    - Server sends a message to all clients

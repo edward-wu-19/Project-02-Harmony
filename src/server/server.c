@@ -91,7 +91,9 @@ int main() {
                         }
                     } else {
                         // Updating Message Struct
-                        data->id = fd;
+                        if (strcmp(data->sender, "Server") != 0){
+                            data->id = fd;
+                        }
 
                         // Send Data To All Other Clients
                         for (itr = 4; itr <= maxfd; itr++) {

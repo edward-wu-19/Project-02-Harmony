@@ -67,9 +67,7 @@ void harmony_rename(){
     strcat(harmony_rename_message, usr);
     strcat(harmony_rename_message, ".");
 
-    printf("%s\n", harmony_rename_message);
-
-    data = new_node(harmony_rename_message, "Server", 0, get_time(), 0);
+    data = new_node(harmony_rename_message, "", 0, get_time(), 0);
 
     // Sending Data
     int err1 = write(server_socket, data, sizeof(struct harmony_message));

@@ -24,7 +24,7 @@ void server_exit() {
 
     // Exiting Function
     printf("Server: Successfully Shut Down\n");
-    printf("Thank You For Using Harmony (Made By Mohammad Khan And Edward Wu)\n");
+    printf("\nThank You For Using Harmony (Made By Mohammad Khan And Edward Wu)\n");
     exit(0);
 }
 
@@ -72,6 +72,7 @@ int main() {
                     // Accepting New Client
                     client = server_handshake(listen_socket);
                     FD_SET(client, &init);
+
                     if (client > maxfd) maxfd = client;
                 } else {
                     // Get Message From Existing Client

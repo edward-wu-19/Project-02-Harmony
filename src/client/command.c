@@ -11,7 +11,7 @@ char* harmony_help_message = "Harmony Help: \n\
     --exit : Terminates the program. \n\
     --help : Returns this message. \n\
     --quit : Terminates the program.\n\
-Only you can see this message.\n";
+Only you can see this message.";
 
 char* harmony_rename_message;
 

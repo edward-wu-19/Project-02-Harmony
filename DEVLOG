@@ -48,3 +48,6 @@ khanMoh -- 2022-01-23 22:50
 wuEdw -- 2022-01-23 23:30
 - Added rename feature
     - Server sends a message to all clients
+
+wuEdw -- 2022-01-23 23:57
+- Added join and leave messages

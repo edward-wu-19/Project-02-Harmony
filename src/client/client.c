@@ -8,6 +8,17 @@ int cmd, server_socket, maxfd, chn = 0;
 fd_set init, cpy;
 
 void client_exit() {
+    // Generating Join Message
+    strcpy(buff, usr);
+    strcat(buff, " has left the channel!");
+    data = new_node(buff, "", 0, get_time(), 0);
+
+    // Sending Data
+    int err1 = write(server_socket, data, sizeof(struct harmony_message));
+    if (err1 == -1) {
+        print_error(-1, "Client: Unable To Send Data To Server");
+    }
+
     // Closing Socket
     int err = close(server_socket);
     if (err == -1) {
@@ -23,8 +34,8 @@ void client_exit() {
     free_queue(Q);
 
     // Ending Program
-    printf("Client: Successfully Shut Down\n");
-    printf("Thank You For Using Harmony (Made By Mohammad Khan And Edward Wu)\n");
+    printf("Client: Successfully Ended Session\n");
+    printf("\nThank You For Using Harmony (Made By Mohammad Khan And Edward Wu)\n");
     exit(0);
 }
 
@@ -69,6 +80,17 @@ int main(int argc, char **argv) {
     FD_ZERO(&init);
     FD_SET(server_socket, &init);
     FD_SET(0, &init);
+
+    // Generating Join Message
+    strcpy(buff, usr);
+    strcat(buff, " has joined the channel!");
+    data = new_node(buff, "", 0, get_time(), 0);
+
+    // Sending Data
+    int err1 = write(server_socket, data, sizeof(struct harmony_message));
+    if (err1 == -1) {
+        print_error(-1, "Client: Unable To Send Data To Server");
+    }
 
     while (1) {
         // Printing Screen

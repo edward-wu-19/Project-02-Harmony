@@ -54,3 +54,6 @@ wuEdw -- 2022-01-23 23:57
 
 wuEdw -- 2022-01-24 00:09
 - Restricted usernames from being empty or Server
+
+wuEdw -- 2022-01-24 01:03
+- Fixed a small bug where you can rename yourself as empty or Server

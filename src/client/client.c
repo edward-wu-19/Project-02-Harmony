@@ -51,20 +51,12 @@ static void sighandler(int signo) {
     return;
 }
 
-// Main Function
-int main(int argc, char **argv) {
-    // Signal Handling
-    signal(SIGINT, sighandler);
-
-    // Variable Declarations
-    Q = create_queue();
-    buff = calloc(HARMONY_BUFFER_SIZE, sizeof(char));
+char* pick_name(){
     usr = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
-    data = calloc(1, sizeof(struct harmony_message));
 
-    // Asking For Username And Color
     int appropriate_name = 0;
     char* name_message = "";
+
     while (!appropriate_name){
         clear_screen();
         printf("%s\n", name_message);
@@ -83,6 +75,23 @@ int main(int argc, char **argv) {
             appropriate_name = 1;
         }
     }
+
+    return usr;
+}
+
+// Main Function
+int main(int argc, char **argv) {
+    // Signal Handling
+    signal(SIGINT, sighandler);
+
+    // Variable Declarations
+    Q = create_queue();
+    buff = calloc(HARMONY_BUFFER_SIZE, sizeof(char));
+    usr = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
+    data = calloc(1, sizeof(struct harmony_message));
+
+    // Asking For Username
+    usr = pick_name();
 
     // Completing Handshake
     if (argc == 2) server_socket = client_handshake(argv[1]);

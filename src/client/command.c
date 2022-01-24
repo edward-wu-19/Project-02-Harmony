@@ -55,10 +55,8 @@ void harmony_rename(){
     data = calloc(1, sizeof(struct harmony_message));
     harmony_rename_message = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
 
-    // Asking For Username And Color
-    clear_screen();
-    printf("Please Enter A New Username: ");
-    usr = get_input(usr);
+    // Asking For Username
+    usr = pick_name();
 
     print_screen(Q);
 

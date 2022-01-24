@@ -40,6 +40,7 @@
 
 // client.c
 void client_exit();
+char* pick_name();
 
 // command.c
 int check_command(char *buff);

@@ -38,3 +38,9 @@ wuEdw -- 2022-01-23 21:59
 
 wuEdw -- 2022-01-23 22:17
 - Revised harmony_help to be on client side
+
+khanMoh -- 2022-01-23 22:50
+- Tested hosting it on a virtual machine service
+    - Note that it is very buggy and there is a lot of data mismatches, don't know how to fix.
+    - Works perfectly when done locally however.
+    - Added some IP address utility

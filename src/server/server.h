@@ -49,4 +49,7 @@ struct harmony_message {
     int channel, id;
 };
 
+// server.c
+void server_exit();
+
 #endif

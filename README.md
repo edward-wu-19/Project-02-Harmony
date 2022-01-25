@@ -87,9 +87,8 @@ None.
 
 ### Bugs
 - Closing the server while a client is selecting a name will not close their select name screen
-- When connecting to the hosted server on digitalocean droplet the client side spacing becomes weird but after a while it fixes itself, we have no idea why this occurs, but we think it has to do with data transferring issues
-- Similar to the one above sometimes the client prints out a message as coming from a different client than the one it actually came from, this problem fixes itself after waiting for a bit as well
-- Basically, just type slowly and the digitalocean droplet server should work normally (note that if you test program locally it works perfectly even with spam)
+- When connecting to the hosted server on digitalocean droplet the client side spacing becomes weird and the client sometimes also prints out a message as coming from a different client than the one it actually came from
+- We have no idea why the above bug occurs, but we think it has to do with data transferring issues (maybe our server hosting isn't high quality enough) (note that if you test program locally it works perfectly even with spam). 
 
 ### Limitations
 - The maximum username length is 32 characters

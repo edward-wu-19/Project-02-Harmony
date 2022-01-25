@@ -181,6 +181,9 @@ int main(int argc, char **argv) {
             // Updating Message Queue
             update_queue(Q, data);
         }
+
+        // Waiting Time
+        usleep(10);
     }
 
     // Ending Program

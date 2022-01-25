@@ -36,7 +36,7 @@
 #define HARMONY_USERNAME_SIZE 32
 #define HARMONY_PORT "9002"
 #define HARMONY_TEST_IP "127.0.0.1"
-#define HARMONY_IP "159.89.234.51"
+#define HARMONY_IP "178.128.144.234"
 
 // structs
 struct harmony_message {

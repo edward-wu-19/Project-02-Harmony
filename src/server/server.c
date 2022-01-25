@@ -119,6 +119,9 @@ int main() {
                         }
                     }
                 }
+
+                // Waiting Time
+                usleep(10);
             }
         }
     }

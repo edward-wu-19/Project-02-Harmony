@@ -88,7 +88,7 @@ None.
 ### Bugs
 - Closing the server while a client is selecting a name will not close their select name screen
 - When connecting to the hosted server on digitalocean droplet the client side spacing becomes weird and the client sometimes also prints out a message as coming from a different client than the one it actually came from
-- We have no idea why the above bug occurs, but we think it has to do with data transferring issues (maybe our server hosting isn't high quality enough) (note that if you test program locally it works perfectly even with spam). 
+- We have no idea why the above bug occurs, but we think it has to do with data transferring issues (maybe our server hosting isn't high quality enough) (note that if you test program locally it works perfectly even with spam).
 
 ### Limitations
 - The maximum username length is 32 characters
@@ -99,6 +99,8 @@ None.
 - `--exit` or `--quit` : Takes in either zero (defaults to 0) or one numeric argument and exits the shell with that number as its exit value
 - `--help` : Prints a list of all possible commands
 - `--rename` : Allows a client to rename itself, makes a server alert
+- `--mute` : Allows a client to locally mute a certain user
+- `--unmute` : Allows a client to locally unmute a certain user
 
 ### Function Headers
 
@@ -111,10 +113,12 @@ char* pick_name();
 #### command.c
 ```c
 int check_command(char *buff);
-void run_command(int cmd);
+void run_command(int cmd, struct harmony_queue *Q, char *usr, int server_socket, int *mute);
 void harmony_exit();
-void harmony_help();
-void harmony_rename();
+void harmony_help(struct harmony_queue *Q, int *mute);
+void harmony_rename(struct harmony_queue *Q, char *usr, int server_socket);
+void harmony_mute(int *mute);
+void harmony_unmute(int *mute);
 ```
 
 #### client/connect.c
@@ -144,7 +148,7 @@ struct harmony_message *new_node(char *msg, char* usr, int chn, char* time, int 
 struct harmony_queue *create_queue();
 void queue_push(struct harmony_queue *Q, char *msg, char *usr, int chn, int id);
 void queue_pop(struct harmony_queue *Q);
-void update_queue(struct harmony_queue *Q, struct harmony_message *data);
+void update_queue(struct harmony_queue *Q, struct harmony_message *data, int *mute);
 void free_queue(struct harmony_queue *Q);
 ```
 

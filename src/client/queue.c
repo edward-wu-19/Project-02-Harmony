@@ -79,9 +79,9 @@ void queue_pop(struct harmony_queue *Q) {
 // Function: A function that updates a harmony_queue with a new harmony_message and limits the size of the queue if needed
 // Arguments: The harmony_queue and the harmony_message
 // Return Values: None
-void update_queue(struct harmony_queue *Q, struct harmony_message *data) {
-    // Adding Message To Queue
-    queue_push(Q, data->val, data->sender, data->channel, data->id);
+void update_queue(struct harmony_queue *Q, struct harmony_message *data, int *mute) {
+    // Adding Message To Queue If Not Muted
+    if (mute[data->id] == 0) queue_push(Q, data->val, data->sender, data->channel, data->id);
 
     // If Size Is Too Large Remove Node
     if (Q->size > HARMONY_QUEUE_SIZE) queue_pop(Q);

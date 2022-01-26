@@ -4,9 +4,8 @@
 struct harmony_queue *Q;
 char *buff, *usr, *ip;
 struct harmony_message *data;
-int cmd, server_socket, maxfd, chn = 0;
-fd_set init, cpy;
-
+int cmd, server_socket, maxfd, chn = 0, *mute;
+fd_set init, cpy;;
 
 // Function: A function that properly ends the client program with ending messages and freeing data
 // Arguments: None
@@ -100,6 +99,7 @@ int main(int argc, char **argv) {
     buff = calloc(HARMONY_BUFFER_SIZE, sizeof(char));
     usr = calloc(HARMONY_USERNAME_SIZE, sizeof(char));
     data = calloc(1, sizeof(struct harmony_message));
+    mute = calloc(HARMONY_QUEUE_SIZE, sizeof(int));
 
     // Asking For Username
     usr = pick_name();
@@ -151,7 +151,7 @@ int main(int argc, char **argv) {
             if (strlen(buff) == 0) continue;
 
             if ((cmd = check_command(buff))) { // If Command Run It
-                run_command(cmd, Q, usr, server_socket);
+                run_command(cmd, Q, usr, server_socket, mute);
             } else { // Else Write To Server
                 // Creating Message Struct
                 data = new_node(buff, usr, chn, get_time(), 0);
@@ -179,7 +179,7 @@ int main(int argc, char **argv) {
             }
 
             // Updating Message Queue
-            update_queue(Q, data);
+            update_queue(Q, data, mute);
         }
 
         // Waiting Time

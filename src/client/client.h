@@ -55,10 +55,12 @@ char* pick_name();
 
 // command.c
 int check_command(char *buff);
-void run_command(int cmd, struct harmony_queue *Q, char *usr, int server_socket);
+void run_command(int cmd, struct harmony_queue *Q, char *usr, int server_socket, int *mute);
 void harmony_exit();
-void harmony_help(struct harmony_queue *Q);
+void harmony_help(struct harmony_queue *Q, int *mute);
 void harmony_rename(struct harmony_queue *Q, char *usr, int server_socket);
+void harmony_mute(int *mute);
+void harmony_unmute(int *mute);
 
 // connect.c
 int client_handshake(char *ip);
@@ -73,7 +75,7 @@ struct harmony_message *new_node(char *msg, char* usr, int chn, char* time, int 
 struct harmony_queue *create_queue();
 void queue_push(struct harmony_queue *Q, char *msg, char *usr, int chn, int id);
 void queue_pop(struct harmony_queue *Q);
-void update_queue(struct harmony_queue *Q, struct harmony_message *data);
+void update_queue(struct harmony_queue *Q, struct harmony_message *data, int *mute);
 void free_queue(struct harmony_queue *Q);
 
 // screen.c
